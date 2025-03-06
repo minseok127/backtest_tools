@@ -19,7 +19,7 @@ import numpy as np
 
 def main():
     # 1) CSV 로드
-    df = pd.read_csv("sell_data.csv") 
+    df = pd.read_csv("sell_data_with_case.csv") 
     # - 여기에는
     #   date, prevday_close, sellday_open, sellday_900_930_close, sellday_930_1000_close, ...
     #   case_930, case_1000, case_1030, case_1100,
@@ -51,11 +51,9 @@ def main():
             trans_main = build_transition_probs_main(past_data)
 
             # 2) build_transition_probs_0_930: (0->9:30)
-            #    CSV에 preopen case가 없으므로 임의 가정(균등)
             trans_0_930 = build_transition_probs_0_930(past_data)
 
             # 3) 체결확률: preopen->9:30 / 9:30->10:00 / ...
-            #    여기선 preopen도 CSV에 없으므로 임의로 calc_preopen_hit_prob
             hit_prob = compute_hit_probabilities(
                 past_data,
                 time_preopen, cases_preopen,
@@ -198,8 +196,6 @@ def build_transition_probs_0_930(past_data):
 
 ############################################################
 # 체결 확률 (preopen & main)
-# preopen->9:30는 CSV가 없으므로 임의값
-# main(9:30->10:00 등)은 CSV 기반
 ############################################################
 def compute_hit_probabilities(
     past_data,
@@ -214,7 +210,6 @@ def compute_hit_probabilities(
     for c0 in cases_preopen:
         hit_prob[time_preopen][c0]={}
         for r in target_candidates_preopen:
-            # 임의로 0.3 할당 or 과거 통계 => 예시
             hit_prob[time_preopen][c0][r] = calc_preopen_hit_prob(past_data, r)
 
     # main
