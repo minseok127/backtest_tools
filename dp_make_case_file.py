@@ -68,6 +68,7 @@ def main():
     for i in range(len(df)):
         row = df.iloc[i]
         current_date = row["date"]  # 예: 20250306 (int)
+        print(current_date)
 
         # (A) 과거(이전 날짜)만 필터링
         #     same-date는 포함 X
