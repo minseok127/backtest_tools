@@ -41,6 +41,7 @@ def main():
     target_candidates = np.arange(0, 0.1, 0.005)
 
     for current_date in unique_dates:
+        print(current_date)
         past_data = df[df["date"]<current_date]
         if len(past_data)==0:
             # 과거데이터 전무 -> 기본 DP
