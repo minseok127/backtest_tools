@@ -37,8 +37,8 @@ def main():
     times_main = [930, 1000, 1030, 1100]
     cases_main = [1,2,3,4]
 
-    target_candidates_preopen = np.linspace(-0.3, 0.3, 100)
-    target_candidates = np.linspace(0, 0.1, 20)
+    target_candidates_preopen = np.arange(-0.1, 0.1, 0.01)
+    target_candidates = np.arange(0, 0.1, 0.005)
 
     for current_date in unique_dates:
         past_data = df[df["date"]<current_date]
